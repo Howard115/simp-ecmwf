@@ -19,7 +19,9 @@ def initialize_browser():
         webdriver: Initialized Chrome webdriver instance
     """
     url = "https://charts.ecmwf.int/products/aifs_medium-mslp-wind850?projection=opencharts_south_east_asia_and_indonesia"
-    driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options)
     driver.get(url)
     return driver
 
