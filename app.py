@@ -1,7 +1,6 @@
 import streamlit as st
 import subprocess
 import os
-from PIL import Image
 import glob
 import re
 
