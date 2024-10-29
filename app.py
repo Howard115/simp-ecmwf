@@ -6,6 +6,7 @@ import re
 import asyncio
 import threading
 import datetime
+import time
 
 class WeatherChartController:
     def __init__(self):
@@ -87,7 +88,15 @@ class WeatherChartController:
         st.title("AI 氣象圖")
         
         if st.session_state.scraper_running and len(self.image_files) < 61:
+            progress = len(self.image_files) / 61
+            st.progress(progress)
             st.info("正在爬取氣象圖...")
+            
+        # Add reset button
+        if st.button("回到第一張"):
+            st.session_state.current_index = 0
+            
+
             
         col1, col2, col3 = st.columns([1, 4, 1])
         
@@ -97,6 +106,8 @@ class WeatherChartController:
             self.handle_next_button()
         with col2:
             self.display_current_image()
+            
+        
 
 # Main execution
 if __name__ == "__main__":
