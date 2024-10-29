@@ -9,18 +9,16 @@ import time
 
 def initialize_browser():
     """
-    Initialize Chrome webdriver and navigate to the specified URL
-    初始化Chrome浏览器并导航到指定的URL
-    
-    Args:
-        url (str): The URL to navigate to
-        
-    Returns:
-        webdriver: Initialized Chrome webdriver instance
+    Initialize Chrome webdriver with additional options for AWS environment
     """
     url = "https://charts.ecmwf.int/products/aifs_medium-mslp-wind850?projection=opencharts_south_east_asia_and_indonesia"
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
+    # Add these additional arguments for AWS environment
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+    options.binary_location = '/usr/bin/google-chrome'  # Specify Chrome binary location
     driver = webdriver.Chrome(options=options)
     driver.get(url)
     return driver
