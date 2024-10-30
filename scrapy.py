@@ -112,7 +112,7 @@ class Controller:
                 print(f"Saved image: {filename}")
                 
                 # Add a small delay after successful screenshot
-                time.sleep(0.1)
+                time.sleep(0.5)
                 return
                 
             except Exception as e:
