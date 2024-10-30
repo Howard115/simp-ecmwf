@@ -66,7 +66,7 @@ class Controller:
         except Exception as e:
             print(f"Error initializing controls: {e}")
             raise
-        self.backward_button = WebDriverWait(driver, 10).until(
+        self.backward_button = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, 'button.MuiButtonBase-root.MuiIconButton-root.jss89.jss90[title="Previous"]'))
         )
         
