@@ -69,25 +69,22 @@ class Controller:
         except Exception as e:
             print(f"Error initializing controls: {e}")
             raise
-        self.backward_button = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'button.MuiButtonBase-root.MuiIconButton-root.jss89.jss90[title="Previous"]'))
-        )
         
         # Create directory if it doesn't exist
         self.save_dir = "weather-chart"
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
             
-    def save_image(self):
-        # Wait for image to be present
+    def save_image(self, current_img_index):
+        # Wait for image with specific alt text based on index
+        expected_alt = f"T+{current_img_index * 6}"
         image = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'img.jss193.jss65.jss197.jss68'))
+            EC.presence_of_element_located((By.CSS_SELECTOR, f'img[alt*="{expected_alt}"]'))
         )
         
-        
-        # Find the text element containing the timestamp
+        # Find the text element containing the timestamp using a more stable CSS selector
         text_element = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'div.MuiBox-root.jss73.jss70 div.MuiBox-root.jss93.jss88 div.MuiBox-root.jss94.jss92 p.MuiTypography-root.MuiTypography-body2'))
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#root > div.MuiGrid-root.MuiGrid-container > div > div > div.MuiGrid-root.MuiGrid-item > div > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-lg-9.MuiGrid-grid-xl-10 > div.MuiBox-root > div > div > div > div.MuiBox-root > div.MuiBox-root > div > div.MuiBox-root > p'))
         )
         timestamp_text = text_element.text
         filename = f"{timestamp_text.replace(' ', '_')}.png"
@@ -109,8 +106,8 @@ def main():
     handle_popup_dialog(driver)
     controller = Controller(driver)
     
-    for _ in range(61):
-        controller.save_image()
+    for i in range(61):
+        controller.save_image(i)
         controller.click_forward_button()
 
     driver.quit()
