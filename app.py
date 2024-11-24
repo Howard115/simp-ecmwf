@@ -23,11 +23,12 @@ class WeatherChartController:
         
         if 'current_index' not in st.session_state:
             st.session_state.current_index = 0
-    
-    def run_scraper_async(self):
+            
+    @st.cache_data(ttl=6*60*60)
+    def run_scraper_async(_self):
         if not st.session_state.scraper_running:
             st.session_state.scraper_running = True
-            thread = threading.Thread(target=self._run_scraper_thread)
+            thread = threading.Thread(target=_self._run_scraper_thread)
             thread.daemon = True
             thread.start()
     
