@@ -26,7 +26,6 @@ def initialize_browser():
 def handle_popup_dialog(driver):
     """
     Handle the popup dialog by waiting for it and closing it
-    处理弹出对话框：等待对话框出现并关闭它
     """
     try:
         # Increased wait time and added error handling
@@ -42,7 +41,6 @@ def handle_popup_dialog(driver):
 def clean_up_images():
     """
     Clean up all files in the weather-chart directory
-    清理weather-chart目录中的所有文件
     """
     if os.path.exists("weather-chart"):
         for file in os.listdir("weather-chart"):
